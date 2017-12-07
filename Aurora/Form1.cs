@@ -13,7 +13,7 @@ namespace Aurora
 {
     public partial class Form1 : Form
     {
-        globalKeyboardHook gkh = new globalKeyboardHook();
+        GlobalKeyboardHook gkh = new GlobalKeyboardHook();
 
         public Form1()
         {
@@ -22,8 +22,6 @@ namespace Aurora
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            gkh.HookedKeys.Add(Keys.A);
-            gkh.HookedKeys.Add(Keys.B);
             gkh.KeyDown += new KeyEventHandler(gkh_KeyDown);
             gkh.KeyUp += new KeyEventHandler(gkh_KeyUp);
         }

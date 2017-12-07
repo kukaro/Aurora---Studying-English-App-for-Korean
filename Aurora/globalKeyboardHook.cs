@@ -9,7 +9,7 @@ namespace Utilities
     /// <summary>
     /// A class that manages a global low level keyboard hook
     /// </summary>
-    class globalKeyboardHook
+    class GlobalKeyboardHook
     {
         #region Constant, Structure and Delegate Definitions
         /// <summary>
@@ -26,7 +26,7 @@ namespace Utilities
             public int dwExtraInfo;
         }
 
-        const int WH_KEYBOARD_LL = 13;
+        const int WH_KEYBOARD_LL = 0x0D;
         const int WM_KEYDOWN = 0x100;
         const int WM_KEYUP = 0x101;
         const int WM_SYSKEYDOWN = 0x104;
@@ -37,7 +37,7 @@ namespace Utilities
         /// <summary>
         /// The collections of keys to watch for
         /// </summary>
-        public List<Keys> HookedKeys = new List<Keys>();
+        public List<Keys> hookedKeys = new List<Keys>();
         /// <summary>
         /// Handle to the hook, need this to unhook and call the next hook
         /// </summary>
@@ -46,6 +46,7 @@ namespace Utilities
         private bool isOnCapsLock;
         private bool isOnNumLock;
         private bool isOnScrollLock;
+        private bool isOnHanguel;
         private bool isPressedLeftShift;
         private bool isPressedRightShift;
         #endregion
@@ -63,18 +64,44 @@ namespace Utilities
 
         #region Constructors and Destructors
         /// <summary>
-        /// Initializes a new instance of the <see cref="globalKeyboardHook"/> class and installs the keyboard hook.
+        /// Initializes a new instance of the <see cref="GlobalKeyboardHook"/> class and installs the keyboard hook.
         /// </summary>
-        public globalKeyboardHook()
+        public GlobalKeyboardHook()
         {
             hook();
+            hookedKeys.Add(Keys.A);
+            hookedKeys.Add(Keys.B);
+            hookedKeys.Add(Keys.C);
+            hookedKeys.Add(Keys.D);
+            hookedKeys.Add(Keys.E);
+            hookedKeys.Add(Keys.F);
+            hookedKeys.Add(Keys.G);
+            hookedKeys.Add(Keys.H);
+            hookedKeys.Add(Keys.I);
+            hookedKeys.Add(Keys.J);
+            hookedKeys.Add(Keys.K);
+            hookedKeys.Add(Keys.L);
+            hookedKeys.Add(Keys.M);
+            hookedKeys.Add(Keys.N);
+            hookedKeys.Add(Keys.O);
+            hookedKeys.Add(Keys.P);
+            hookedKeys.Add(Keys.Q);
+            hookedKeys.Add(Keys.R);
+            hookedKeys.Add(Keys.S);
+            hookedKeys.Add(Keys.T);
+            hookedKeys.Add(Keys.U);
+            hookedKeys.Add(Keys.V);
+            hookedKeys.Add(Keys.W);
+            hookedKeys.Add(Keys.X);
+            hookedKeys.Add(Keys.Y);
+            hookedKeys.Add(Keys.Z);
         }
 
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
-        /// <see cref="globalKeyboardHook"/> is reclaimed by garbage collection and uninstalls the keyboard hook.
+        /// <see cref="GlobalKeyboardHook"/> is reclaimed by garbage collection and uninstalls the keyboard hook.
         /// </summary>
-        ~globalKeyboardHook()
+        ~GlobalKeyboardHook()
         {
             unhook();
         }
@@ -112,7 +139,7 @@ namespace Utilities
             if (code >= 0)
             {
                 Keys key = (Keys)lParam.vkCode;
-                if (HookedKeys.Contains(key))
+                if (hookedKeys.Contains(key))
                 {
                     KeyEventArgs kea = new KeyEventArgs(key);
                     if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) && (KeyDown != null))
@@ -138,14 +165,20 @@ namespace Utilities
             isOnCapsLock = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
             isOnNumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
             isOnScrollLock = (((ushort)GetKeyState(0x91)) & 0xffff) != 0;
+            isOnHanguel = (((ushort)GetKeyState(0x15)) & 0xffff) != 0;
             isPressedLeftShift = (((ushort)GetKeyState(0xA0)) & 0xffff) != 0;
             isPressedRightShift = (((ushort)GetKeyState(0xA1)) & 0xffff) != 0;
         }
 
+        /// <summary>
+		/// All state to String for debug
+		/// </summary>
         private string toStringToggleKeyState()
         {
-            return "[Cap : " + isOnCapsLock + ", Num : " + isOnNumLock + ", Scr : " + isOnScrollLock + ", LShift : " + isPressedLeftShift + ", RShift : " + isPressedRightShift + "]";
+            return "[Cap : " + isOnCapsLock + ", Num : " + isOnNumLock + ", Scr : " + isOnScrollLock + ", Han : " + isOnHanguel + ", LShift : " + isPressedLeftShift + ", RShift : " + isPressedRightShift + "]";
         }
+
+
         #endregion
 
         #region DLL imports
