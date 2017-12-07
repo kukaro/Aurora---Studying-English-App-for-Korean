@@ -40,10 +40,9 @@ namespace Utilities {
 		/// </summary>
 		IntPtr hhook = IntPtr.Zero;
 
-
-        private bool CapsLock = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
-        private bool NumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
-        private bool ScrollLock = (((ushort)GetKeyState(0x91)) & 0xffff) != 0;
+        private bool isOnCapsLock = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
+        private bool isOnNumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
+        private bool isOnScrollLock = (((ushort)GetKeyState(0x91)) & 0xffff) != 0;
         #endregion
 
         #region Events
@@ -98,6 +97,10 @@ namespace Utilities {
 		/// <param name="lParam">The keyhook event information</param>
 		/// <returns></returns>
 		public int hookProc(int code, int wParam, ref keyboardHookStruct lParam) {
+            changeState();
+            Console.WriteLine("ÇÏÀ§ : "+lParam.vkCode);
+            Console.WriteLine("Ä¸½º : "+isOnCapsLock);
+
 			if (code >= 0) {
 				Keys key = (Keys)lParam.vkCode;
 				if (HookedKeys.Contains(key)) {
@@ -113,6 +116,16 @@ namespace Utilities {
 			}
 			return CallNextHookEx(hhook, code, wParam, ref lParam);
 		}
+
+        /// <summary>
+		/// Change toggle key's state
+		/// </summary>
+        private void changeState()
+        {
+            isOnCapsLock = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
+            isOnNumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
+            isOnScrollLock = (((ushort)GetKeyState(0x91)) & 0xffff) != 0;
+        }
 		#endregion
 
 		#region DLL imports

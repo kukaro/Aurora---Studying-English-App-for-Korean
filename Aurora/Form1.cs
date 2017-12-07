@@ -31,13 +31,13 @@ namespace Aurora
         void gkh_KeyUp(object sender, KeyEventArgs e)
         {
             Console.WriteLine("Up\t" + e.KeyCode.ToString());
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         void gkh_KeyDown(object sender, KeyEventArgs e)
         {
             Console.WriteLine("Down\t" + e.KeyCode.ToString());
-            e.Handled = true;
+            //e.Handled = true;
         }
     }
 }
