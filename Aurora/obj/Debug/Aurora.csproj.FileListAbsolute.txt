@@ -7,3 +7,4 @@ C:\Users\jiharu\Documents\Aurora-StudyingEnglishAppForKorean\Aurora\obj\Debug\Au
 C:\Users\jiharu\Documents\Aurora-StudyingEnglishAppForKorean\Aurora\obj\Debug\Aurora.csproj.CoreCompileInputs.cache
 C:\Users\jiharu\Documents\Aurora-StudyingEnglishAppForKorean\Aurora\obj\Debug\Aurora.exe
 C:\Users\jiharu\Documents\Aurora-StudyingEnglishAppForKorean\Aurora\obj\Debug\Aurora.pdb
+C:\Users\jiharu\Documents\Aurora-StudyingEnglishAppForKorean\Aurora\obj\Debug\Aurora.csprojResolveAssemblyReference.cache

@@ -9,11 +9,11 @@ namespace Utilities {
 	/// A class that manages a global low level keyboard hook
 	/// </summary>
 	class globalKeyboardHook {
-		#region Constant, Structure and Delegate Definitions
-		/// <summary>
-		/// defines the callback type for the hook
-		/// </summary>
-		public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct lParam);
+        #region Constant, Structure and Delegate Definitions
+        /// <summary>
+        /// defines the callback type for the hook
+        /// </summary>
+        public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct lParam);
 
 		public struct keyboardHookStruct {
 			public int vkCode;
@@ -39,13 +39,18 @@ namespace Utilities {
 		/// Handle to the hook, need this to unhook and call the next hook
 		/// </summary>
 		IntPtr hhook = IntPtr.Zero;
-		#endregion
 
-		#region Events
-		/// <summary>
-		/// Occurs when one of the hooked keys is pressed
-		/// </summary>
-		public event KeyEventHandler KeyDown;
+
+        private bool CapsLock = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
+        private bool NumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
+        private bool ScrollLock = (((ushort)GetKeyState(0x91)) & 0xffff) != 0;
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Occurs when one of the hooked keys is pressed
+        /// </summary>
+        public event KeyEventHandler KeyDown;
 		/// <summary>
 		/// Occurs when one of the hooked keys is released
 		/// </summary>
@@ -148,6 +153,9 @@ namespace Utilities {
 		/// <returns>A handle to the library</returns>
 		[DllImport("kernel32.dll")]
 		static extern IntPtr LoadLibrary(string lpFileName);
-		#endregion
-	}
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        public static extern short GetKeyState(int keyCode);
+        #endregion
+    }
 }
