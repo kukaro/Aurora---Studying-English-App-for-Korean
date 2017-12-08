@@ -179,7 +179,10 @@ namespace Utilities
                             }
                             else if (key == Keys.OemMinus || key == Keys.Subtract)
                             {
-                                mainWord += "-";
+                                if(!(key==Keys.OemMinus && (isPressedLeftShift || isPressedRightShift)))
+                                {
+                                    mainWord += "-";
+                                }
                             }
                         }
                         Console.WriteLine(mainWord);
