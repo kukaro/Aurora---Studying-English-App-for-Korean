@@ -49,7 +49,7 @@ namespace Utilities
         #region Constructors and Destructors
         public GlobalMsgHook()
         {
-            hook();
+            //hook();
             //hookedKeys.Add(Keys.Oem1);
         }
 
