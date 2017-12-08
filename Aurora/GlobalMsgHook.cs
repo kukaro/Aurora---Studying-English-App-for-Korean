@@ -49,8 +49,8 @@ namespace Utilities
         #region Constructors and Destructors
         public GlobalMsgHook()
         {
-            //hook();
-            //hookedKeys.Add(Keys.Oem1);
+            hook();
+            hookedKeys.Add(Keys.F1);
         }
 
         ~GlobalMsgHook()
@@ -79,7 +79,10 @@ namespace Utilities
 
         public int hookProc(int code, int wParam, ref MsgHookStruct lParam)
         {
-            Console.WriteLine("hi");
+            Keys key = (Keys)lParam.hwnd;
+            if (hookedKeys.Contains(key)){
+                Console.WriteLine(Clipboard.GetText());
+            }
             return CallNextHookEx(hhook, code, wParam, ref lParam);
         }
         #endregion
