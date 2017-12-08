@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -42,6 +41,7 @@ namespace Utilities
         /// Handle to the hook, need this to unhook and call the next hook
         /// </summary>
         IntPtr hhook = IntPtr.Zero;
+        private string mainWord;
 
         private bool isOnCapsLock;
         private bool isOnNumLock;
@@ -95,6 +95,9 @@ namespace Utilities
             hookedKeys.Add(Keys.X);
             hookedKeys.Add(Keys.Y);
             hookedKeys.Add(Keys.Z);
+            hookedKeys.Add(Keys.Space);
+            hookedKeys.Add(Keys.Enter);
+            hookedKeys.Add(Keys.Back);
         }
 
         /// <summary>
@@ -134,21 +137,29 @@ namespace Utilities
         /// <returns></returns>
         public int hookProc(int code, int wParam, ref keyboardHookStruct lParam)
         {
-            changeState();
-            Console.WriteLine(toStringToggleKeyState());
+            //changeState();
+            //Console.WriteLine(toStringToggleKeyState());
             if (code >= 0)
             {
-                Keys key = (Keys)lParam.vkCode;
+                Keys key = (Keys)lParam.vkCode; ;
                 if (hookedKeys.Contains(key))
                 {
                     KeyEventArgs kea = new KeyEventArgs(key);
-                    if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) && (KeyDown != null))
+                    if ((wParam == WM_KEYUP || wParam == WM_SYSKEYUP))
                     {
-                        KeyDown(this, kea);
-                    }
-                    else if ((wParam == WM_KEYUP || wParam == WM_SYSKEYUP) && (KeyUp != null))
-                    {
-                        KeyUp(this, kea);
+                        object charTmp = makeChar(key);
+                        if (charTmp != null)
+                        {
+                            mainWord += charTmp;
+                        }
+                        else
+                        {
+                            if (key == Keys.Back)
+                            {
+                                mainWord = mainWord.Substring(0, mainWord.Length - 1);
+                            }
+                        }
+                        Console.WriteLine(mainWord);
                     }
                     if (kea.Handled)
                         return 1;
@@ -166,8 +177,8 @@ namespace Utilities
             isOnNumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
             isOnScrollLock = (((ushort)GetKeyState(0x91)) & 0xffff) != 0;
             isOnHanguel = (((ushort)GetKeyState(0x15)) & 0xffff) != 0;
-            isPressedLeftShift = (((ushort)GetKeyState(0xA0)) & 0xffff) != 0;
-            isPressedRightShift = (((ushort)GetKeyState(0xA1)) & 0xffff) != 0;
+            isPressedLeftShift = (((ushort)GetAsyncKeyState(0xA0)) & 0xffff) != 0;
+            isPressedRightShift = (((ushort)GetAsyncKeyState(0xA1)) & 0xffff) != 0;
         }
 
         /// <summary>
@@ -178,7 +189,24 @@ namespace Utilities
             return "[Cap : " + isOnCapsLock + ", Num : " + isOnNumLock + ", Scr : " + isOnScrollLock + ", Han : " + isOnHanguel + ", LShift : " + isPressedLeftShift + ", RShift : " + isPressedRightShift + "]";
         }
 
-
+        public object makeChar(Keys key)
+        {
+            changeState();
+            Console.WriteLine(toStringToggleKeyState());
+            bool isLower = !isOnCapsLock && (!isPressedLeftShift && !isPressedRightShift);
+            bool isAlpha = (int)key >= 'A' && (int)key <= 'Z';
+            if (isLower && isAlpha)
+            {
+                Console.WriteLine(key.ToString().ToLower()[0]);
+                return key.ToString().ToLower()[0];
+            }
+            else if (!isLower && isAlpha)
+            {
+                Console.WriteLine(key.ToString());
+                return key.ToString()[0];
+            }
+            return null;
+        }
         #endregion
 
         #region DLL imports
@@ -222,6 +250,9 @@ namespace Utilities
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         public static extern short GetKeyState(int keyCode);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        public static extern short GetAsyncKeyState(int keyCode);
         #endregion
     }
 }

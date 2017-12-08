@@ -22,20 +22,7 @@ namespace Aurora
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            gkh.KeyDown += new KeyEventHandler(gkh_KeyDown);
-            gkh.KeyUp += new KeyEventHandler(gkh_KeyUp);
-        }
 
-        void gkh_KeyUp(object sender, KeyEventArgs e)
-        {
-            Console.WriteLine("Up\t" + e.KeyCode.ToString());
-            //e.Handled = true;
-        }
-
-        void gkh_KeyDown(object sender, KeyEventArgs e)
-        {
-            Console.WriteLine("Down\t" + e.KeyCode.ToString());
-            //e.Handled = true;
         }
     }
 }
