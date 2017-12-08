@@ -100,6 +100,8 @@ namespace Utilities
             hookedKeys.Add(Keys.Back);
             hookedKeys.Add(Keys.OemQuotes);
             hookedKeys.Add(Keys.OemPeriod);
+            hookedKeys.Add(Keys.OemMinus);
+            hookedKeys.Add(Keys.Subtract);
         }
 
         /// <summary>
@@ -159,21 +161,25 @@ namespace Utilities
                             {
                                 mainWord = mainWord.Substring(0, mainWord.Length - 1);
                             }
-                            else if(key == Keys.Space)
+                            else if (key == Keys.Space)
                             {
                                 mainWord += " ";
                             }
-                            else if(key == Keys.Enter)
+                            else if (key == Keys.Enter)
                             {
                                 mainWord += "\n";
                             }
-                            else if(key == Keys.OemQuotes)
+                            else if (key == Keys.OemQuotes)
                             {
                                 mainWord += "\'";
                             }
-                            else if(key == Keys.OemPeriod)
+                            else if (key == Keys.OemPeriod)
                             {
                                 mainWord += ".";
+                            }
+                            else if (key == Keys.OemMinus || key == Keys.Subtract)
+                            {
+                                mainWord += "-";
                             }
                         }
                         Console.WriteLine(mainWord);
