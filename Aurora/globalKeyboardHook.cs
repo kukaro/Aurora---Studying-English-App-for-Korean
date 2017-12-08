@@ -98,6 +98,8 @@ namespace Utilities
             hookedKeys.Add(Keys.Space);
             hookedKeys.Add(Keys.Enter);
             hookedKeys.Add(Keys.Back);
+            hookedKeys.Add(Keys.OemQuotes);
+            hookedKeys.Add(Keys.OemPeriod);
         }
 
         /// <summary>
@@ -137,7 +139,6 @@ namespace Utilities
         /// <returns></returns>
         public int hookProc(int code, int wParam, ref keyboardHookStruct lParam)
         {
-            //changeState();
             //Console.WriteLine(toStringToggleKeyState());
             if (code >= 0)
             {
@@ -157,6 +158,22 @@ namespace Utilities
                             if (key == Keys.Back)
                             {
                                 mainWord = mainWord.Substring(0, mainWord.Length - 1);
+                            }
+                            else if(key == Keys.Space)
+                            {
+                                mainWord += " ";
+                            }
+                            else if(key == Keys.Enter)
+                            {
+                                mainWord += "\n";
+                            }
+                            else if(key == Keys.OemQuotes)
+                            {
+                                mainWord += "\'";
+                            }
+                            else if(key == Keys.OemPeriod)
+                            {
+                                mainWord += ".";
                             }
                         }
                         Console.WriteLine(mainWord);
@@ -192,17 +209,18 @@ namespace Utilities
         public object makeChar(Keys key)
         {
             changeState();
-            Console.WriteLine(toStringToggleKeyState());
             bool isLower = !isOnCapsLock && (!isPressedLeftShift && !isPressedRightShift);
             bool isAlpha = (int)key >= 'A' && (int)key <= 'Z';
+            if (isOnCapsLock && (isPressedLeftShift || isPressedRightShift))
+            {
+                isLower = true;
+            }
             if (isLower && isAlpha)
             {
-                Console.WriteLine(key.ToString().ToLower()[0]);
                 return key.ToString().ToLower()[0];
             }
             else if (!isLower && isAlpha)
             {
-                Console.WriteLine(key.ToString());
                 return key.ToString()[0];
             }
             return null;
