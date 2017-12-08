@@ -16,12 +16,6 @@ namespace Utilities
         /// </summary>
         public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct lParam);
 
-        public struct mouseHokkStruct
-        {
-            public int fosX;
-            public int fosY;
-        }
-
         public struct keyboardHookStruct
         {
             public int vkCode;
