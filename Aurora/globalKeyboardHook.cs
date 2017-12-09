@@ -1,3 +1,4 @@
+using CheckState;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -33,6 +34,10 @@ namespace Utilities
         const int WM_SYSKEYUP = 0x105;
         const int WM_LBUTTONDOWN = 0x201;
         const int WM_LBUTTONUP = 0x202;
+        #endregion
+
+        #region static Variables
+        private static CheckClipboard checkClipboard = CheckClipboard.getInstacnce();
         #endregion
 
         #region Instance Variables
@@ -194,6 +199,7 @@ namespace Utilities
                         return 1;
                 }
             }
+            checkClipboard.setNewClipboard();
             return CallNextHookEx(hhook, code, wParam, ref lParam);
         }
 
