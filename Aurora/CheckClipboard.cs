@@ -6,8 +6,8 @@ namespace CheckState
     class CheckClipboard
     {
         private static CheckClipboard instance = new CheckClipboard();
-        private string presClipbaord = "";
-        private string newClipboard = "";
+        private string presClipbaord = Clipboard.GetText();
+        private string newClipboard = Clipboard.GetText();
 
         private CheckClipboard()
         {
@@ -40,6 +40,11 @@ namespace CheckState
         public void matchClipboard()
         {
             presClipbaord = newClipboard;
+        }
+
+        public string getState()
+        {
+            return "presClipboard : " + presClipbaord + ", newClipboard :" + newClipboard;
         }
 
         public static CheckClipboard getInstacnce()

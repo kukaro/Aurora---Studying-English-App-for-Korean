@@ -13,6 +13,7 @@ namespace Utilities
             {
                 if (checkClipboard.isChangeClipboard())
                 {
+                    Console.WriteLine(checkClipboard.getState());
                     checkClipboard.matchClipboard();
                     Console.WriteLine("변했다.");
                 }
