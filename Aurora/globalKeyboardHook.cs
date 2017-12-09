@@ -40,12 +40,10 @@ namespace Utilities
         /// The collections of keys to watch for
         /// </summary>
         public List<Keys> hookedKeys = new List<Keys>();
-        public List<Keys> hookedMouseKeys = new List<Keys>();
         /// <summary>
         /// Handle to the hook, need this to unhook and call the next hook
         /// </summary>
         IntPtr hhook = IntPtr.Zero;
-        IntPtr hhookM = IntPtr.Zero;
         private string mainWord;
 
         private bool isOnCapsLock;
@@ -107,7 +105,6 @@ namespace Utilities
             hookedKeys.Add(Keys.OemPeriod);
             hookedKeys.Add(Keys.OemMinus);
             hookedKeys.Add(Keys.Subtract);
-            hookedMouseKeys.Add(Keys.LButton);
         }
 
         /// <summary>
@@ -128,7 +125,6 @@ namespace Utilities
         {
             IntPtr hInstance = LoadLibrary("User32");
             hhook = SetWindowsHookEx(WH_KEYBOARD_LL, hookProc, hInstance, 0);
-            hhookM = SetWindowsHookEx(WH_MOUSE_LL, hookMouseProc, hInstance, 0);
         }
 
         /// <summary>
@@ -137,7 +133,6 @@ namespace Utilities
         public void unhook()
         {
             UnhookWindowsHookEx(hhook);
-            UnhookWindowsHookEx(hhookM);
         }
 
         /// <summary>
@@ -200,23 +195,6 @@ namespace Utilities
                 }
             }
             return CallNextHookEx(hhook, code, wParam, ref lParam);
-        }
-
-        public int hookMouseProc(int code, int wParam, ref keyboardHookStruct lParam)
-        {
-            int posX = lParam.vkCode;
-            int posY = lParam.scanCode;
-            switch (wParam)
-            {
-                case WM_LBUTTONUP:
-                    Console.WriteLine("UP : " + posX + ":" + posY + ":");
-                    break;
-                case WM_LBUTTONDOWN:
-                    Console.WriteLine("DOWN : " + posX + ":" + posY + ":");
-                    break;
-            }
-            //Console.WriteLine("гою╖ : "+wParam+":"+lParam.vkCode);
-            return CallNextHookEx(hhookM, code, wParam, ref lParam);
         }
 
         /// <summary>

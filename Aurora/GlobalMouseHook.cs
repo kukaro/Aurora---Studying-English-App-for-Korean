@@ -5,22 +5,18 @@ using System.Windows.Forms;
 
 namespace Utilities
 {
-    class GlobalMsgHook
+    class GlobalMouseHook
     {
         #region Constant, Structure and Delegate Definitions
         /// <summary>
         /// defines the callback type for the hook
         /// </summary>
-        public delegate int MsgHookProc(int code, int wParam, ref MsgHookStruct lParam);
+        public delegate int MouseHookProc(int code, int wParam, ref MouseHookStruct lParam);
 
-        public struct MsgHookStruct
+        public struct MouseHookStruct
         {
-            public int hwnd;
-            public uint message;
-            public int wParam;
-            public int lParam;
-            public int time;
-            public IntPtr pt;
+            public int posX;
+            public int posY;
         }
 
         const int WH_GETMESSAGE = 0x03;
@@ -32,6 +28,10 @@ namespace Utilities
         const int WH_JOURNALPLAYBACK = 0x01;
         const int WH_FOREGROUNDIDLE = 0x0b;
         const int WH_CALLWNDPROCRET = 0x0c;
+        const int WH_MOUSE_LL = 0x0E;
+
+        const int WM_LBUTTONDOWN = 0x201;
+        const int WM_LBUTTONUP = 0x202;
         #endregion
 
         #region Instance Variables
@@ -47,13 +47,13 @@ namespace Utilities
         #endregion
 
         #region Constructors and Destructors
-        public GlobalMsgHook()
+        public GlobalMouseHook()
         {
             hook();
-            hookedKeys.Add(Keys.F1);
+            hookedKeys.Add(Keys.LButton);
         }
 
-        ~GlobalMsgHook()
+        ~GlobalMouseHook()
         {
             unhook();
         }
@@ -66,7 +66,7 @@ namespace Utilities
         public void hook()
         {
             IntPtr hInstance = LoadLibrary("User32");
-            hhook = SetWindowsHookEx(WH_KEYBOARD_LL, hookProc, hInstance, 0);
+            hhook = SetWindowsHookEx(WH_MOUSE_LL, hookProc, hInstance, 0);
         }
 
         /// <summary>
@@ -77,11 +77,21 @@ namespace Utilities
             UnhookWindowsHookEx(hhook);
         }
 
-        public int hookProc(int code, int wParam, ref MsgHookStruct lParam)
+        public int hookProc(int code, int wParam, ref MouseHookStruct lParam)
         {
-            Keys key = (Keys)lParam.hwnd;
-            if (hookedKeys.Contains(key)){
-                Console.WriteLine(Clipboard.GetText());
+
+            int posX = lParam.posX;
+            int posY = lParam.posY;
+            switch (wParam)
+            {
+                case WM_LBUTTONUP:
+                    Console.WriteLine("UP : " + posX + ":" + posY + ":");
+                    Console.WriteLine(Clipboard.GetText());
+                    break;
+                case WM_LBUTTONDOWN:
+                    Console.WriteLine("DOWN : " + posX + ":" + posY + ":");
+                    Console.WriteLine(Clipboard.GetText());
+                    break;
             }
             return CallNextHookEx(hhook, code, wParam, ref lParam);
         }
@@ -97,7 +107,7 @@ namespace Utilities
         /// <param name="threadId">The thread you want to attach the event to, can be null</param>
         /// <returns>a handle to the desired hook</returns>
         [DllImport("user32.dll")]
-        static extern IntPtr SetWindowsHookEx(int idHook, MsgHookProc callback, IntPtr hInstance, uint threadId);
+        static extern IntPtr SetWindowsHookEx(int idHook, MouseHookProc callback, IntPtr hInstance, uint threadId);
 
         /// <summary>
         /// Unhooks the windows hook.
@@ -124,7 +134,7 @@ namespace Utilities
         /// <param name="lParam">The lparam.</param>
         /// <returns></returns>
         [DllImport("user32.dll")]
-        static extern int CallNextHookEx(IntPtr idHook, int nCode, int wParam, ref MsgHookStruct lParam);
+        static extern int CallNextHookEx(IntPtr idHook, int nCode, int wParam, ref MouseHookStruct lParam);
         #endregion
     }
 }

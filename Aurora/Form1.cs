@@ -15,7 +15,7 @@ namespace Aurora
     public partial class Form1 : Form
     {
         GlobalKeyboardHook gkh = new GlobalKeyboardHook();
-        GlobalMsgHook gmh = new GlobalMsgHook();
+        GlobalMouseHook gmh = new GlobalMouseHook();
 
         public Form1()
         {
