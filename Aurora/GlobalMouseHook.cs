@@ -93,11 +93,11 @@ namespace Utilities
             {
                 case WM_LBUTTONUP:
                     Console.WriteLine("UP : " + posX + ":" + posY + ":");
-                    Console.WriteLine(Clipboard.GetText());
+                    //Console.WriteLine(Clipboard.GetText());
                     break;
                 case WM_LBUTTONDOWN:
                     Console.WriteLine("DOWN : " + posX + ":" + posY + ":");
-                    Console.WriteLine(Clipboard.GetText());
+                    //Console.WriteLine(Clipboard.GetText());
                     break;
             }
             return CallNextHookEx(hhook, code, wParam, ref lParam);
