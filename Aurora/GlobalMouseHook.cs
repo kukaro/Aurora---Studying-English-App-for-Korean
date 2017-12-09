@@ -77,6 +77,13 @@ namespace Utilities
             UnhookWindowsHookEx(hhook);
         }
 
+        /// <summary>
+        /// The callback for the Mouse hook
+        /// </summary>
+        /// <param name="code">The hook code, if it isn't >= 0, the function shouldn't do anyting</param>
+        /// <param name="wParam">The event type</param>
+        /// <param name="lParam">The mouse event information</param>
+        /// <returns></returns>
         public int hookProc(int code, int wParam, ref MouseHookStruct lParam)
         {
 
