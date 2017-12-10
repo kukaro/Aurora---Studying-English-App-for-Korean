@@ -9,12 +9,28 @@
         public int AppearanceFrequency
         {
             get { return appearanceFrequency; }
-            set { searchFrequency = value; }
         }
 
         public int SearchFrequency
         {
             get { return searchFrequency; }
-            set { searchFrequency = value; }
         }
+
+        public Word(string word)
+        {
+            this.word = word;
+            appearanceFrequency = 1;
+            searchFrequency = 0;
+        }
+
+        public void increaseSearchfrequency()
+        {
+            searchFrequency++;
+        }
+
+        public void increaseAppearancefrequency()
+        {
+            appearanceFrequency++;
+        }
+    }
 }
