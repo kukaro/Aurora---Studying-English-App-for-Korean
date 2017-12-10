@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckClipboard.cs" />
+    <Compile Include="Word.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -11,7 +11,7 @@ namespace Utilities
         /// <summary>
         /// defines the callback type for the hook
         /// </summary>
-        public delegate int MouseHookProc(int code, int wParam, ref MouseHookStruct lParam);
+        //public delegate int MouseHookProc(int code, int wParam, ref MouseHookStruct lParam);
 
         public struct MouseHookStruct
         {
