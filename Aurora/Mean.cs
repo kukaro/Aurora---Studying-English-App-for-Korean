@@ -1,4 +1,4 @@
-﻿namespace dto
+﻿namespace Dto
 {
     class Mean
     {
