@@ -15,5 +15,9 @@
             get { return data; }
             set { data = value; }
         }
+        override public string ToString()
+        {
+            return "WordClass : " + wordClass + ", Data : " + data;
+        }
     }
 }
