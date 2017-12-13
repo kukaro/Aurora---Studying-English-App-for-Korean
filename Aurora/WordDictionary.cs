@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Utilities;
 
 namespace Data
 {
@@ -35,6 +35,24 @@ namespace Data
             return dict.Count;
         }
 
+        public int add(ArrayList array)
+        {
+            foreach (string word in array)
+            {
+                try
+                {
+                    dict.Add(word, new Word(word));
+                }
+                catch (System.ArgumentException e)
+                {
+                    Console.WriteLine(e);
+                    dict[word].AppearanceFrequency += 1;
+                }
+
+            }
+            return dict.Count;
+        }
+
         public ArrayList spaceSeparate(string sentenceName)
         {
             try
@@ -46,6 +64,20 @@ namespace Data
                     arr.Add(word);
 
                 }
+                return arr;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return null;
+        }
+
+        public ArrayList KNRSeparate(string sentenceName)
+        {
+            try
+            {
+                ArrayList arr = KNRSeparator.sentenceSeparate(sentenceName);
                 return arr;
             }
             catch (Exception e)

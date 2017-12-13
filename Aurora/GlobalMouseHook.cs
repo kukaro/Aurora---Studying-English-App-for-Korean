@@ -92,11 +92,11 @@ namespace Utilities
             switch (wParam)
             {
                 case WM_LBUTTONUP:
-                    Console.WriteLine("UP : " + posX + ":" + posY + ":");
+                    //Console.WriteLine("UP : " + posX + ":" + posY + ":");
                     //Console.WriteLine(Clipboard.GetText());
                     break;
                 case WM_LBUTTONDOWN:
-                    Console.WriteLine("DOWN : " + posX + ":" + posY + ":");
+                    //Console.WriteLine("DOWN : " + posX + ":" + posY + ":");
                     //Console.WriteLine(Clipboard.GetText());
                     break;
             }

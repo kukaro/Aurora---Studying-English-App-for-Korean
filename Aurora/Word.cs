@@ -56,6 +56,7 @@ namespace Dto
             try
             {
                 meanList.Add(m);
+                return true;
             }
             catch(Exception e)
             {

@@ -9,6 +9,11 @@ namespace CheckState
         private string presClipbaord = Clipboard.GetText();
         private string newClipboard = Clipboard.GetText();
 
+        public string StringClipboard
+        {
+            get { return newClipboard; }
+        }
+
         private CheckClipboard()
         {
             /*pass*/

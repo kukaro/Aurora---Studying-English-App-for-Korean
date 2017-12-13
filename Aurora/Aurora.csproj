@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckClipboard.cs" />
+    <Compile Include="KNRSeparator.cs" />
     <Compile Include="Mean.cs" />
     <Compile Include="Word.cs" />
     <Compile Include="Form1.cs">
