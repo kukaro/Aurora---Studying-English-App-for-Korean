@@ -20,6 +20,7 @@ namespace Dto
         public int AppearanceFrequency
         {
             get { return appearanceFrequency; }
+            set { appearanceFrequency = value; }
         }
 
         public int SearchFrequency
