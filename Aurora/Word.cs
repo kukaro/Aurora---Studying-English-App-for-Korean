@@ -21,6 +21,11 @@ namespace Dto
             get { return searchFrequency; }
         }
 
+        public ArrayList MeanList
+        {
+            get { return meanList; }
+        }
+
         public Word(string word)
         {
             this.word = word;
