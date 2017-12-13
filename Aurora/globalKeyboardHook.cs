@@ -1,4 +1,5 @@
 using CheckState;
+using Data;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -37,7 +38,8 @@ namespace Utilities
         #endregion
 
         #region static Variables
-        private static CheckClipboard checkClipboard = CheckClipboard.getInstacnce();
+        private static CheckClipboard checkClipboard = CheckClipboard.getInstance();
+        private static WordDictionary wordDictionary = WordDictionary.getInstance();
         #endregion
 
         #region Instance Variables
@@ -175,7 +177,9 @@ namespace Utilities
                             }
                             else if (key == Keys.Enter)
                             {
-                                mainWord += "\n";
+                                wordDictionary.add(mainWord);
+                                mainWord = "";
+                                //mainWord += "\n";
                             }
                             else if (key == Keys.OemQuotes)
                             {

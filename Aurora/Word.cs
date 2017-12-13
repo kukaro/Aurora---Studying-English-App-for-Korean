@@ -7,7 +7,13 @@ namespace Dto
     class Word
     {
         private string word;
+        /*
+         * 내가 외부에서 등록한 횟수
+         */
         private int appearanceFrequency;
+        /*
+         * 내가 어플리케이션 내부 찾기 기능을 사용해서 찾아본 횟수
+         */
         private int searchFrequency;
         private ArrayList meanList;
 
@@ -55,6 +61,11 @@ namespace Dto
                 Console.WriteLine(e);
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            return "word : " + word + ", appearanceFrequency : " + appearanceFrequency + ", searchFrequency : " + searchFrequency;
         }
     }
 }

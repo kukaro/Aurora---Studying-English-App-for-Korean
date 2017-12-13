@@ -47,7 +47,7 @@ namespace CheckState
             return "presClipboard : " + presClipbaord + ", newClipboard :" + newClipboard;
         }
 
-        public static CheckClipboard getInstacnce()
+        public static CheckClipboard getInstance()
         {
             return instance;
         }

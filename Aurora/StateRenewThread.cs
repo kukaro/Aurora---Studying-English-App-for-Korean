@@ -6,7 +6,7 @@ namespace Utilities
 {
     class StateRenewThread
     {
-        private static CheckClipboard checkClipboard = CheckClipboard.getInstacnce();
+        private static CheckClipboard checkClipboard = CheckClipboard.getInstance();
         async public void Run()
         {
             while (true)
