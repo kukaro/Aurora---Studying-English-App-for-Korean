@@ -40,6 +40,7 @@ namespace Utilities
         #region static Variables
         private static CheckClipboard checkClipboard = CheckClipboard.getInstance();
         private static WordDictionary wordDictionary = WordDictionary.getInstance();
+        private static keyboardHookProc khook;
         #endregion
 
         #region Instance Variables
@@ -131,7 +132,8 @@ namespace Utilities
         public void hook()
         {
             IntPtr hInstance = LoadLibrary("User32");
-            hhook = SetWindowsHookEx(WH_KEYBOARD_LL, hookProc, hInstance, 0);
+            khook = hookProc;
+            hhook = SetWindowsHookEx(WH_KEYBOARD_LL, khook, hInstance, 0);
         }
 
         /// <summary>

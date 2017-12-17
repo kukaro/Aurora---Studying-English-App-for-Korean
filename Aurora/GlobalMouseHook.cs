@@ -13,6 +13,7 @@ namespace Utilities
         /// </summary>
         public delegate int MouseHookProc(int code, int wParam, ref MouseHookStruct lParam);
 
+
         public struct MouseHookStruct
         {
             public int posX;
@@ -32,6 +33,10 @@ namespace Utilities
 
         const int WM_LBUTTONDOWN = 0x201;
         const int WM_LBUTTONUP = 0x202;
+        #endregion
+
+        #region static Variables
+        private static MouseHookProc mhook;
         #endregion
 
         #region Instance Variables
@@ -66,7 +71,8 @@ namespace Utilities
         public void hook()
         {
             IntPtr hInstance = LoadLibrary("User32");
-            hhook = SetWindowsHookEx(WH_MOUSE_LL, hookProc, hInstance, 0);
+            mhook = hookProc;
+            hhook = SetWindowsHookEx(WH_MOUSE_LL, mhook, hInstance, 0);
         }
 
         /// <summary>
