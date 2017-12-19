@@ -1,0 +1,12 @@
+영어 8품사(The eight parts of speech)
+
+명사(noun) n
+대명사(pronoun) p
+형용사(adjective) a
+동사(verb) v
+자동사와 타동사가 존재
+부사(adverb) ad
+조동사는 부사이다.
+전치사(preposition) prep
+접속사(conjunction) conj
+감탄사(interjection) int
