@@ -13,7 +13,7 @@ v0.1 추가사항
 v0.2 추가사항  
 키보드 및 마우스이벤트가 발생했을경우 해당 문자열을 데이터에 저장하고 캐이싱스타일별로 끊어서 또 저장합니다.  
 지원하는 캐이싱은 아래와 같습니다.
-- K&R스타일
-- allmon스타일
-- carmel스타일
-- const스타일
+- parscal casing
+- snake casing
+- carmel casing
+- const casing
